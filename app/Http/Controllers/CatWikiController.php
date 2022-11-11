@@ -15,7 +15,7 @@ class CatWikiController extends Controller
         $this->catwikiService = $catwikiService;
     }
 
-    public function healthCheck(Request $req)
+    public function healthCheck()
     {
         return Response::json([
             "success" => true
