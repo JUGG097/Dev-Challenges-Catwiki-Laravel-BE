@@ -1,27 +1,47 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Catwiki Laravel Backend Project (The backend for the Catwiki Website deployed [here](https://catwiki-adeoluwa.netlify.app/))
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project was developed using `PHP` v "^8.0.2" and `Laravel` v "^9.11" libraries.
 
-## About Template
-Created with a CMD running PHP `8.0.2`, runs a Laravel version of `9.*.*`
+Deployed on a `Digital Oceans` Droplet using `Github Actions` for CI/CD.
 
-## Contributing
+The Catwiki Website was deployed with `Netlify` link [here](https://catwiki-adeoluwa.netlify.app/).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Figma design was provided by [devChallenges.io](https://devchallenges.io/).
 
-## Code of Conduct
+You can clone project and customise at your end.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### API Documentation
 
-## Security Vulnerabilities
+- 'http://127.0.0.1:8000/api/v1/topTen' Endpoint
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+METHOD: 'GET'
 
-## License
+SUCCESS RESPONSE (200): {'success': true, 'data': '**********'}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+ERROR RESPONSE (4**, 5**): {'success': false, 'message': '***********'}
+
+
+- 'http://127.0.0.1:8000/api/v1/details/{cat_id}' Endpoint
+
+METHOD: 'GET'
+
+SUCCESS RESPONSE (200): {'success': true, 'data': '**********'}
+
+ERROR RESPONSE (4**, 5**): {'success': false, 'message': '***********'}
+
+
+- 'http://127.0.0.1:8000/api/v1/photos/{cat_id}' Endpoint
+
+METHOD: 'GET'
+
+SUCCESS RESPONSE (200): {'success': true, 'data': '**********'}
+
+ERROR RESPONSE (4**, 5**): {'success': false, 'message': '***********'}
+
+- 'http://127.0.0.1:8000/api/v1/breedlist' Endpoint
+
+METHOD: 'GET'
+
+SUCCESS RESPONSE (200): {'success': true, 'data': '**********'}
+
+ERROR RESPONSE (4**, 5**): {'success': false, 'message': '***********'}
