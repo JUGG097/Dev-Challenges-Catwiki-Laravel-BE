@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix('v1')->group(function () {
-    Route::get('check', [CatWikiController::class, "healthCheck"]);
+Route::prefix("v1")->group(function () {
+    Route::get("check", [CatWikiController::class, "healthCheck"]);
+    Route::get("topTen", [CatWikiController::class, "showTopTen"]);
 });
