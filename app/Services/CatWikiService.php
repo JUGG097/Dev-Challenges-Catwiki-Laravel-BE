@@ -14,13 +14,13 @@ class CatWikiService
         ];
     }
 
-    
+
     public function getBreeds($fetchKey, $catId = null)
     {
         if ($fetchKey == "topTen") {
             return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds?limit=10&page=0");
         } elseif ($fetchKey == "details") {
-            return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/" + $catId);
+            return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/" . $catId);
         } else {
             return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/");
         }
@@ -28,5 +28,10 @@ class CatWikiService
 
     public function getCatImages($catId, $queryLimit)
     {
+        return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/images/search?page=0&limit="
+            . $queryLimit
+            . "&breed_ids="
+            . $catId
+            . "&include_breeds=false");
     }
 }

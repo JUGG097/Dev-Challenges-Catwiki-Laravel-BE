@@ -41,8 +41,30 @@ class CatWikiController extends Controller
         ], 200);
     }
 
-    public function showCatDetails($pathVariable)
+    public function showCatDetails($catId)
     {
+        $detailsPayload = $this->catwikiService->getBreeds("details", $catId);
+        if ($detailsPayload->status() != 200) {
+            return Response::json([
+                "success" => false,
+                "message" => "3rd party api error"
+            ], 503);
+        }
+        $detailsPayloadJson = $detailsPayload->json();
+
+        $imagesPayload = $this->catwikiService->getCatImages($catId, "1");
+        if ($imagesPayload->status() != 200) {
+            return Response::json([
+                "success" => false,
+                "message" => "3rd party api error"
+            ], 503);
+        }
+        $detailsPayloadJson["image"] = $imagesPayload->json()[0];
+
+        return Response::json([
+            "success" => true,
+            "data" => $this->extractCatDetails($detailsPayloadJson)
+        ], 200);
     }
 
     public function showCatPhotos($pathVariable)
