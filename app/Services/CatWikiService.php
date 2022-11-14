@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use ErrorException;
+use Throwable;
 
 class CatWikiService
 {
@@ -14,24 +16,33 @@ class CatWikiService
         ];
     }
 
-
     public function getBreeds($fetchKey, $catId = null)
     {
-        if ($fetchKey == "topTen") {
-            return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds?limit=10&page=0");
-        } elseif ($fetchKey == "details") {
-            return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/" . $catId);
-        } else {
-            return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/");
+        try {
+            if ($fetchKey == "topTen") {
+                return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds?limit=10&page=0");
+            } elseif ($fetchKey == "details") {
+                return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/" . $catId);
+            } else {
+                return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/breeds/");
+            }
+        } catch (Throwable $e) {
+            throw new ErrorException($e);
         }
+        
     }
 
     public function getCatImages($catId, $queryLimit)
     {
-        return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/images/search?page=0&limit="
+        try {
+            return Http::get($this->authHeaders)->get("https://api.thecatapi.com/v1/images/search?page=0&limit="
             . $queryLimit
             . "&breed_ids="
             . $catId
             . "&include_breeds=false");
+        } catch (Throwable $e) {
+            throw new ErrorException($e);
+        }
+        
     }
 }

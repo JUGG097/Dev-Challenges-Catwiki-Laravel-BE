@@ -67,12 +67,39 @@ class CatWikiController extends Controller
         ], 200);
     }
 
-    public function showCatPhotos($pathVariable)
+    public function showCatPhotos($catId)
     {
+        $imagesPayload = $this->catwikiService->getCatImages($catId, "8");
+        if ($imagesPayload->status() != 200) {
+            return Response::json([
+                "success" => false,
+                "message" => "3rd party api error"
+            ], 503);
+        }
+
+        return Response::json([
+            "success" => true,
+            "data" => $imagesPayload->json()
+        ], 200);
     }
 
     public function showBreedList()
     {
+        $payload = $this->catwikiService->getBreeds("breedList");
+        if ($payload->status() != 200) {
+            return Response::json([
+                "success" => false,
+                "message" => "3rd party api error"
+            ], 503);
+        }
+
+        $extracted_data = array_map(function ($a) {
+            return $this->extractBreedDetails($a);
+        }, $payload->json());
+        return Response::json([
+            "success" => true,
+            "data" => $extracted_data
+        ], 200);
     }
 
     private function extractCatDetails($obj)
@@ -94,6 +121,14 @@ class CatWikiController extends Controller
             "stranger_friendly" => $obj["stranger_friendly"],
             "wikipedia_url" => $obj["wikipedia_url"],
             "image" => $obj["image"],
+        ];
+    }
+
+    private function extractBreedDetails($obj)
+    {
+        return [
+            "id" => $obj["id"],
+            "name" => $obj["name"],
         ];
     }
 }
