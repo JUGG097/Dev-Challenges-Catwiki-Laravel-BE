@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CatWikiHelpers;
 use App\Services\CatWikiService;
 use Illuminate\Support\Facades\Response;
-use Symfony\Component\Translation\Extractor\AbstractFileExtractor;
 
 class CatWikiController extends Controller
 {
 
 
-    public function __construct(CatwikiService $catwikiService)
+    public function __construct(CatwikiService $catwikiService, CatWikiHelpers $catwikiHelpers)
     {
         $this->catwikiService = $catwikiService;
+        $this->helpers = $catwikiHelpers;
     }
 
     public function healthCheck()
@@ -33,7 +34,7 @@ class CatWikiController extends Controller
         }
 
         $extracted_data = array_map(function ($a) {
-            return $this->extractCatDetails($a);
+            return $this->helpers->extractCatDetails($a);
         }, $payload->json());
         return Response::json([
             "success" => true,
@@ -63,7 +64,7 @@ class CatWikiController extends Controller
 
         return Response::json([
             "success" => true,
-            "data" => $this->extractCatDetails($detailsPayloadJson)
+            "data" => $this->helpers->extractCatDetails($detailsPayloadJson)
         ], 200);
     }
 
@@ -94,41 +95,11 @@ class CatWikiController extends Controller
         }
 
         $extracted_data = array_map(function ($a) {
-            return $this->extractBreedDetails($a);
+            return $this->helpers->extractBreedDetails($a);
         }, $payload->json());
         return Response::json([
             "success" => true,
             "data" => $extracted_data
         ], 200);
-    }
-
-    private function extractCatDetails($obj)
-    {
-        return [
-            "id" => $obj["id"],
-            "name" => $obj["name"],
-            "temperament" => $obj["temperament"],
-            "origin" => $obj["origin"],
-            "description" => $obj["description"],
-            "life_span" => $obj["life_span"],
-            "adaptability" => $obj["adaptability"],
-            "affection_level" => $obj["affection_level"],
-            "child_friendly" => $obj["child_friendly"],
-            "grooming" => $obj["grooming"],
-            "health_issues" => $obj["health_issues"],
-            "intelligence" => $obj["intelligence"],
-            "social_needs" => $obj["social_needs"],
-            "stranger_friendly" => $obj["stranger_friendly"],
-            "wikipedia_url" => $obj["wikipedia_url"],
-            "image" => $obj["image"],
-        ];
-    }
-
-    private function extractBreedDetails($obj)
-    {
-        return [
-            "id" => $obj["id"],
-            "name" => $obj["name"],
-        ];
     }
 }
