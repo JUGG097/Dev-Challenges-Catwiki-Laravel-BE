@@ -35,7 +35,7 @@ class CatWikiService
     public function getCatImages($catId, $queryLimit)
     {
         try {
-            return Http::get($this->authHeaders)->get("https://api.thecatapi.com/v1/images/search?page=0&limit="
+            return Http::withHeaders($this->authHeaders)->get("https://api.thecatapi.com/v1/images/search?page=0&limit="
             . $queryLimit
             . "&breed_ids="
             . $catId
